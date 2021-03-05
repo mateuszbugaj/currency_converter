@@ -1,0 +1,30 @@
+<div id="main-block">
+    <div id="currencies" *ngFor="let c of availableCurrencies">
+        <label>
+            <h1>{{c}}</h1>
+            <input type="radio" [value]="c" [(ngModel)]="currency" style="margin: 0px;" (change)="reset()">
+        </label>
+    </div>
+
+    <form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label for="requestValue">
+                <h1>You send</h1>
+            </label>
+            <div *ngIf="getFormControls().requestValue.touched && getFormControls().requestValue.invalid">
+                <p>Please provide a valid number</p>
+            </div>
+            <input type="text" id="input-field" formControlName="requestValue" class="form-control" placeholder="0" />
+            <h1 id="currency-code">{{currency}}</h1>
+            <button type="submit" id="exchange-button" [disabled]="!requestForm.valid">Exchange</button>
+
+            <h1>They receive</h1>
+            <h2>{{totalValue.value}} [PLN]</h2>
+            <div *ngIf="totalValue.exchangeRate != 0">
+                <h2>1 [{{currency}}] = {{totalValue.exchangeRate}} [PLN]</h2>
+            </div>
+        </div>
+
+
+    </form>
+</div>
